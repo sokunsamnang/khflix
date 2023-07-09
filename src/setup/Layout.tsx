@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -23,6 +24,7 @@ export function Layout(props: { children: ReactNode }) {
       >
         {props.children}
       </div>
+      <Analytics />
     </div>
   );
 }

@@ -10,6 +10,7 @@
     "@sentry/integrations": "^7.49.0",
     "@sentry/react": "^7.49.0",
     "@use-gesture/react": "^10.2.24",
+    "@vercel/analytics": "^1.0.1",
     "core-js": "^3.29.1",
     "crypto-js": "^4.1.1",
     "dompurify": "^3.0.1",
