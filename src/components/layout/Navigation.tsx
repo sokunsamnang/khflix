@@ -53,7 +53,7 @@ export function Navigation(props: NavigationProps) {
               setShowModal(true);
             }}
           />
-          <a
+          {/* <a
             href={conf().DISCORD_LINK}
             target="_blank"
             rel="noreferrer"
@@ -68,7 +68,7 @@ export function Navigation(props: NavigationProps) {
             className="text-2xl text-white"
           >
             <IconPatch icon={Icons.GITHUB} clickable />
-          </a>
+          </a> */}
         </div>
       </div>
       <SettingsModal show={showModal} onClose={() => setShowModal(false)} />
