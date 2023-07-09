@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import { Analytics } from "@vercel/analytics/react";
 import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
