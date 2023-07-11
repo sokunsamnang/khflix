@@ -6,11 +6,13 @@ import { SENTRY_DSN } from "@/setup/constants";
 
 Sentry.init({
   dsn: SENTRY_DSN,
-  release: `KHFlix@${conf().APP_VERSION}`,
+  release: `khflix@${conf().APP_VERSION}`,
   sampleRate: 0.5,
+  replaysOnErrorSampleRate: 1.0,
   integrations: [
     new Sentry.BrowserTracing(),
     new CaptureConsole(),
     new HttpClient(),
+    new Sentry.Replay(),
   ],
 });
