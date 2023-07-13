@@ -107,12 +107,11 @@ function App() {
                 </>
               ) : null}
               <Route path="*" component={NotFoundPage} />
-
-              <Analytics />
             </Switch>
           </BannerContextProvider>
         </BookmarkContextProvider>
       </WatchedContextProvider>
+      <Analytics />
     </SettingsProvider>
   );
 }

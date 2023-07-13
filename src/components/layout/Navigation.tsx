@@ -5,6 +5,8 @@ import { IconPatch } from "@/components/buttons/IconPatch";
 import { Icons } from "@/components/Icon";
 import { useBannerSize } from "@/hooks/useBanner";
 import { conf } from "@/setup/config";
+import { PrivacyPolicy } from "@/views/other/PrivacyPolicy";
+import { TermsOfService } from "@/views/other/TermsOfService";
 import SettingsModal from "@/views/SettingsModal";
 
 import { BrandPill } from "./BrandPill";
@@ -61,6 +63,11 @@ export function Navigation(props: NavigationProps) {
           >
             <IconPatch icon={Icons.FACEBOOK} clickable />
           </a>
+
+          <PrivacyPolicy clickable />
+
+          <TermsOfService clickable />
+
           {/* <a
             href={conf().GITHUB_LINK}
             target="_blank"
