@@ -1,3 +1,5 @@
+// eslint-disable-next-line import/no-unresolved
+import { Analytics } from "@vercel/analytics/react";
 import { ReactElement, lazy, useEffect } from "react";
 import {
   Redirect,
@@ -10,7 +12,6 @@ import {
 import { convertLegacyUrl, isLegacyUrl } from "@/backend/metadata/getmeta";
 import { MWMediaType } from "@/backend/metadata/types/mw";
 import { BannerContextProvider } from "@/hooks/useBanner";
-import { Layout } from "@/setup/Layout";
 import { BookmarkContextProvider } from "@/state/bookmark";
 import { SettingsProvider } from "@/state/settings";
 import { WatchedContextProvider } from "@/state/watched";
@@ -41,76 +42,74 @@ function App() {
       <WatchedContextProvider>
         <BookmarkContextProvider>
           <BannerContextProvider>
-            <Layout>
-              <Switch>
-                {/* functional routes */}
-                <Route exact path="/v2-migration" component={V2MigrationView} />
-                <Route exact path="/">
-                  <Redirect to={`/search/${MWMediaType.MOVIE}`} />
-                </Route>
+            <Switch>
+              {/* functional routes */}
+              <Route exact path="/v2-migration" component={V2MigrationView} />
+              <Route exact path="/">
+                <Redirect to={`/search/${MWMediaType.MOVIE}`} />
+              </Route>
 
-                {/* pages */}
-                <Route exact path="/media/:media">
-                  <LegacyUrlView>
-                    <MediaView />
-                  </LegacyUrlView>
-                </Route>
-                <Route exact path="/media/:media/:season/:episode">
-                  <LegacyUrlView>
-                    <MediaView />
-                  </LegacyUrlView>
-                </Route>
-                <Route
-                  exact
-                  path="/search/:type/:query?"
-                  component={SearchView}
-                />
+              {/* pages */}
+              <Route exact path="/media/:media">
+                <LegacyUrlView>
+                  <MediaView />
+                </LegacyUrlView>
+              </Route>
+              <Route exact path="/media/:media/:season/:episode">
+                <LegacyUrlView>
+                  <MediaView />
+                </LegacyUrlView>
+              </Route>
+              <Route
+                exact
+                path="/search/:type/:query?"
+                component={SearchView}
+              />
 
-                {/* other */}
-                <Route
-                  exact
-                  path="/dev"
-                  component={lazy(
-                    () => import("@/views/developer/DeveloperView")
-                  )}
-                />
-                <Route
-                  exact
-                  path="/dev/video"
-                  component={lazy(
-                    () => import("@/views/developer/VideoTesterView")
-                  )}
-                />
-                {/* developer routes that can abuse workers are disabled in production */}
-                {process.env.NODE_ENV === "development" ? (
-                  <>
-                    <Route
-                      exact
-                      path="/dev/test"
-                      component={lazy(
-                        () => import("@/views/developer/TestView")
-                      )}
-                    />
+              {/* other */}
+              <Route
+                exact
+                path="/dev"
+                component={lazy(
+                  () => import("@/views/developer/DeveloperView")
+                )}
+              />
+              <Route
+                exact
+                path="/dev/video"
+                component={lazy(
+                  () => import("@/views/developer/VideoTesterView")
+                )}
+              />
+              {/* developer routes that can abuse workers are disabled in production */}
+              {process.env.NODE_ENV === "development" ? (
+                <>
+                  <Route
+                    exact
+                    path="/dev/test"
+                    component={lazy(() => import("@/views/developer/TestView"))}
+                  />
 
-                    <Route
-                      exact
-                      path="/dev/providers"
-                      component={lazy(
-                        () => import("@/views/developer/ProviderTesterView")
-                      )}
-                    />
-                    <Route
-                      exact
-                      path="/dev/embeds"
-                      component={lazy(
-                        () => import("@/views/developer/EmbedTesterView")
-                      )}
-                    />
-                  </>
-                ) : null}
-                <Route path="*" component={NotFoundPage} />
-              </Switch>
-            </Layout>
+                  <Route
+                    exact
+                    path="/dev/providers"
+                    component={lazy(
+                      () => import("@/views/developer/ProviderTesterView")
+                    )}
+                  />
+                  <Route
+                    exact
+                    path="/dev/embeds"
+                    component={lazy(
+                      () => import("@/views/developer/EmbedTesterView")
+                    )}
+                  />
+                </>
+              ) : null}
+              <Route path="*" component={NotFoundPage} />
+
+              <Analytics />
+            </Switch>
           </BannerContextProvider>
         </BookmarkContextProvider>
       </WatchedContextProvider>
