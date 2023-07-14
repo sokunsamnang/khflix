@@ -64,9 +64,9 @@ export function Navigation(props: NavigationProps) {
             <IconPatch icon={Icons.FACEBOOK} clickable />
           </a>
 
-          <PrivacyPolicy clickable />
+          <PrivacyPolicy />
 
-          <TermsOfService clickable />
+          <TermsOfService />
 
           {/* <a
             href={conf().GITHUB_LINK}
