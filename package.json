@@ -1,8 +1,8 @@
 {
   "name": "khflix",
-  "version": "3.1.2",
+  "version": "1.0.0",
   "private": true,
-  "homepage": "khflix.vercel.app",
+  "homepage": "khflix.xyz",
   "dependencies": {
     "@formkit/auto-animate": "^1.0.0-beta.5",
     "@headlessui/react": "^1.5.0",
