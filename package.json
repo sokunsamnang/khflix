@@ -38,7 +38,7 @@
     "unpacker": "^1.0.1"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 3000",
     "build": "vite build",
     "test": "vitest run",
     "preview": "vite preview",
