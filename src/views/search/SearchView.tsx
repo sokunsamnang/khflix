@@ -4,12 +4,15 @@ import { useTranslation } from "react-i18next";
 import Sticky from "react-stickynode";
 
 import { Navigation } from "@/components/layout/Navigation";
+// import { TermsOfService } from "@/views/other/TermsOfService";
 import { ThinContainer } from "@/components/layout/ThinContainer";
 import { WideContainer } from "@/components/layout/WideContainer";
 import { SearchBarInput } from "@/components/SearchBar";
 import { Title } from "@/components/text/Title";
 import { useBannerSize } from "@/hooks/useBanner";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
+import { PrivacyPolicy } from "@/views/other/PrivacyPolicy";
+import { TermsOfService } from "@/views/other/TermsOfService";
 
 import { SearchResultsPartial } from "./SearchResultsPartial";
 
@@ -61,6 +64,17 @@ export function SearchView() {
       <WideContainer>
         <SearchResultsPartial search={search} />
       </WideContainer>
+      <div
+        className="flex"
+        style={
+          search.searchQuery.length > 0
+            ? { margin: "20px" }
+            : { position: "absolute", bottom: "0", left: "0", margin: "20px" }
+        }
+      >
+        <PrivacyPolicy />
+        <TermsOfService />
+      </div>
     </>
   );
 }
