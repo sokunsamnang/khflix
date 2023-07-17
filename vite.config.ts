@@ -37,7 +37,7 @@ export default defineConfig({
       manifest: {
         name: "KHFlix",
         short_name: "KHFlix",
-        description: "The place for your favourite movies & shows",
+        description: "Discover a world of free streaming movies on our platform. Explore an extensive collection of films spanning different genres, all available to watch at no cost. From gripping action to heartwarming dramas and side-splitting comedies, there's something for everyone. With our user-friendly interface, finding and streaming your favorite movies is a breeze. Say hello to unlimited entertainment and start enjoying your favorite films instantly. No subscriptions required. Begin your cinematic journey today!",
         theme_color: "#120f1d",
         background_color: "#120f1d",
         display: "standalone",
