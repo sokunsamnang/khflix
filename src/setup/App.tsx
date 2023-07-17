@@ -17,6 +17,7 @@ import { SettingsProvider } from "@/state/settings";
 import { WatchedContextProvider } from "@/state/watched";
 import { MediaView } from "@/views/media/MediaView";
 import { NotFoundPage } from "@/views/notfound/NotFoundView";
+import { Sitemap } from "@/views/other/SiteMap";
 import { V2MigrationView } from "@/views/other/v2Migration";
 import { SearchView } from "@/views/search/SearchView";
 
@@ -65,6 +66,7 @@ function App() {
                 path="/search/:type/:query?"
                 component={SearchView}
               />
+              <Route exact path="/sitemap.xml" component={Sitemap} />
 
               {/* other */}
               <Route
