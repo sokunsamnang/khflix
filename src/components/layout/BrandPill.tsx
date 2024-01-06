@@ -20,8 +20,6 @@ export function BrandPill(props: {
           : "",
       )}
     >
-      {/* <Icon className="text-xl" icon={Icons.MOVIE_WEB} /> */}
-
       <img src="android-chrome-192x192.png" height={30} width={30} alt="Logo" />
 
       <span
