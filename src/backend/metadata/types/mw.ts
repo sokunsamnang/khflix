@@ -18,6 +18,7 @@ export type MWSeasonWithEpisodeMeta = {
     id: string;
     number: number;
     title: string;
+    air_date: string;
   }[];
 };
 
@@ -43,7 +44,6 @@ export type MWMediaMeta = MWMediaMetaBase & MWMediaMetaSpecific;
 
 export interface MWQuery {
   searchQuery: string;
-  type: MWMediaType;
 }
 
 export interface DetailedMeta {

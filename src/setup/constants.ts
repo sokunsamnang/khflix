@@ -1,6 +1,6 @@
 export const APP_VERSION = import.meta.env.PACKAGE_VERSION;
-export const FACEBOOK_LINK = "https://www.facebook.com/khflixmovies";
-// export const GITHUB_LINK = "https://github.com/movie-web/movie-web";
-export const GA_ID = "G-HKZRBE16R6";
-export const SENTRY_DSN =
-  "https://2a3d982c63f84e0f96a0a8695e97af78@o4505501127344128.ingest.sentry.io/4505501128523776";
+export const DISCORD_LINK = "https://discord.movie-web.app";
+export const GITHUB_LINK = "https://github.com/movie-web/movie-web";
+export const DONATION_LINK = "https://ko-fi.com/movieweb";
+export const GA_ID = "G-44YVXRL61C";
+export const BACKEND_URL = "https://backend.movie-web.app";

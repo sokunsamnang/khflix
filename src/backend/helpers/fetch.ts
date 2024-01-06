@@ -1,18 +1,10 @@
-import { FetchOptions, FetchResponse, ofetch } from "ofetch";
+import { ofetch } from "ofetch";
 
-import { conf } from "@/setup/config";
+import { getApiToken, setApiToken } from "@/backend/helpers/providerApi";
+import { getLoadbalancedProxyUrl } from "@/utils/providers";
 
-let proxyUrlIndex = Math.floor(Math.random() * conf().PROXY_URLS.length);
-
-// round robins all proxy urls
-function getProxyUrl(): string {
-  const url = conf().PROXY_URLS[proxyUrlIndex];
-  proxyUrlIndex = (proxyUrlIndex + 1) % conf().PROXY_URLS.length;
-  return url;
-}
-
-type P<T> = Parameters<typeof ofetch<T>>;
-type R<T> = ReturnType<typeof ofetch<T>>;
+type P<T> = Parameters<typeof ofetch<T, any>>;
+type R<T> = ReturnType<typeof ofetch<T, any>>;
 
 const baseFetch = ofetch.create({
   retry: 0,
@@ -30,7 +22,11 @@ export function mwFetch<T>(url: string, ops: P<T>[1] = {}): R<T> {
   return baseFetch<T>(url, ops);
 }
 
-export function proxiedFetch<T>(url: string, ops: P<T>[1] = {}): R<T> {
+export async function singularProxiedFetch<T>(
+  proxyUrl: string,
+  url: string,
+  ops: P<T>[1] = {},
+): R<T> {
   let combinedUrl = ops?.baseURL ?? "";
   if (
     combinedUrl.length > 0 &&
@@ -50,45 +46,34 @@ export function proxiedFetch<T>(url: string, ops: P<T>[1] = {}): R<T> {
   Object.entries(ops?.params ?? {}).forEach(([k, v]) => {
     parsedUrl.searchParams.set(k, v);
   });
+  Object.entries(ops?.query ?? {}).forEach(([k, v]) => {
+    parsedUrl.searchParams.set(k, v);
+  });
 
-  return baseFetch<T>(getProxyUrl(), {
+  let headers = ops.headers ?? {};
+  const apiToken = await getApiToken();
+  if (apiToken)
+    headers = {
+      ...headers,
+      "X-Token": apiToken,
+    };
+
+  return baseFetch<T>(proxyUrl, {
     ...ops,
     baseURL: undefined,
     params: {
       destination: parsedUrl.toString(),
+    },
+    query: {},
+    headers,
+    onResponse(context) {
+      const tokenHeader = context.response.headers.get("X-Token");
+      if (tokenHeader) setApiToken(tokenHeader);
+      ops.onResponse?.(context);
     },
   });
 }
 
-export function rawProxiedFetch<T>(
-  url: string,
-  ops: FetchOptions = {}
-): Promise<FetchResponse<T>> {
-  let combinedUrl = ops?.baseURL ?? "";
-  if (
-    combinedUrl.length > 0 &&
-    combinedUrl.endsWith("/") &&
-    url.startsWith("/")
-  )
-    combinedUrl += url.slice(1);
-  else if (
-    combinedUrl.length > 0 &&
-    !combinedUrl.endsWith("/") &&
-    !url.startsWith("/")
-  )
-    combinedUrl += `/${url}`;
-  else combinedUrl += url;
-
-  const parsedUrl = new URL(combinedUrl);
-  Object.entries(ops?.params ?? {}).forEach(([k, v]) => {
-    parsedUrl.searchParams.set(k, v);
-  });
-
-  return baseFetch.raw(getProxyUrl(), {
-    ...ops,
-    baseURL: undefined,
-    params: {
-      destination: parsedUrl.toString(),
-    },
-  });
+export function proxiedFetch<T>(url: string, ops: P<T>[1] = {}): R<T> {
+  return singularProxiedFetch<T>(getLoadbalancedProxyUrl(), url, ops);
 }
